@@ -100,33 +100,32 @@ func HeadSort(data Interface) {
 }
 
 func headSort(data Interface, a, b int) {
-	first := a
 	lo := 0
 	hi := b - a
 	for index := (hi - 1) / 2; index >= 0; index-- {
-		siftDown(data, index, hi, first)
+		siftDown(data, index, hi)
 	}
 
 	for index := hi - 1; index > 0; index-- {
-		data.Swap(first, first+index)
-		siftDown(data, lo, index, first)
+		data.Swap(0, index)
+		siftDown(data, lo, index)
 	}
 }
 
-func siftDown(data Interface, lo, hi, first int) {
+func siftDown(data Interface, lo, hi int) {
 	root := lo
 	for {
 		child := 2*root + 1
 		if child >= hi {
 			break
 		}
-		if child+1 < hi && data.Less(first+child, first+child+1) {
+		if child+1 < hi && data.Less(child, child+1) {
 			child++
 		}
-		if !data.Less(first+root, first+child) {
+		if !data.Less(root, child) {
 			return
 		}
-		data.Swap(first+root, first+child)
+		data.Swap(root, child)
 		root = child
 	}
 }
